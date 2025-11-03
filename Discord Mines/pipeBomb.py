@@ -40,7 +40,7 @@ async def on_message(message):
             mines = [mine for mine in land_mines if mine["channel"] == message.channel]
             mine = random.choice(mines)
             
-            if random.random() < EXPLOSION_CHANCE:
+            if random.random() < EXPLOSION_CHANCE * len(mines):
                 try:
                     await member.edit(
                         timed_out_until = discord.utils.utcnow() + TIMEOUT_DURATION,
@@ -63,12 +63,19 @@ async def on_message(message):
 
 # Places a landmine in the current channel this message was sent in
 @bot.tree.command(name="land_mine", description="Place a landmine in this channel.")
-async def land_mine(interaction: discord.Interaction):
+async def land_mine(interaction: discord.Interaction, count: int):
    payload = {
        "channel": interaction.channel,
        "owner": interaction.user
               }
-   land_mines.append(payload)
-   await interaction.response.send_message(f"Landmine has been placed in {interaction.channel.name} by {interaction.user}")
+   for i in range(count):
+       land_mines.append(payload)
+   await interaction.response.send_message(f"{count} landmine(s) have been placed in {interaction.channel.name} by {interaction.user}!")
+
+# Counts the number of land mines in a channel
+@bot.tree.command(name="land_mine_count", description="Counts the number of land mines in the current channel")
+async def land_mine_count(interaction: discord.Interaction):
+   count = sum(1 for mine in land_mines if mine["channel"] == interaction.channel)
+   await interaction.response.send_message(f"There are currently {count} landmine(s) in the current channel!")
 
 bot.run(token)
