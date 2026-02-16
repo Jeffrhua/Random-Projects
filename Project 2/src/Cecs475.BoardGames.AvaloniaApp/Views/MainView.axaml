@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Cecs475.BoardGames.AvaloniaApp.MainView"
+             xmlns:aview="using:Cecs475.BoardGames.AvaloniaView"
+			 >
+	<DockPanel DataContext="{DynamicResource ViewModel}" x:CompileBindings="False">
+		<StackPanel DockPanel.Dock="Top" >
+			<Button IsEnabled="{Binding CanUndo}"
+					Padding="4" Click="Button_Click">Undo last move</Button>
+		</StackPanel>
+		<StackPanel DockPanel.Dock="Bottom" Height="35" Orientation="Horizontal">
+			<Label>Advantage:</Label>
+			<Label x:Name="mAdvantageLabel"/>
+			<Label Margin="6,0,0,0">Current Player:</Label>
+			<Label x:Name="mPlayerLabel"/>
+		</StackPanel>
+		<ContentControl x:Name="ViewPlaceholder" Content="{DynamicResource GameView}"/>
+	</DockPanel>
+
+</UserControl>

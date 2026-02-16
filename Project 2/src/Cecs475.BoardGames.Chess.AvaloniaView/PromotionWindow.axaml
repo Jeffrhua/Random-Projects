@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="Cecs475.BoardGames.Chess.AvaloniaView.PromotionWindow"
+        Title="PromotionWindow"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        SystemDecorations="None"
+        Background="#B0AEAE"
+		Width="350"
+		Height="150" 
+        d:DesignWidth="350" d:DesignHeight="150">
+	
+	<!-- Defining images for each of the promotion pieces -->
+	<StackPanel Margin="10">
+		<TextBlock Text="Promote pawn to:" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+			<!-- Each stack panel has a pointer handling event for highlighting -->
+			<Panel Width="75" Height="75" PointerEntered="Panel_PointerEntered" PointerExited="Panel_PointerExited">
+				<Image x:Name="Knight" Width="75" Height="75" Cursor="Hand" PointerPressed="OnPieceSelected"/>
+			</Panel>
+			
+			<Panel Width="75" Height="75" PointerEntered="Panel_PointerEntered" PointerExited="Panel_PointerExited">
+				<Image x:Name="Bishop" Width="75" Height="75" Cursor="Hand" PointerPressed="OnPieceSelected"/>
+			</Panel>
+			
+			<Panel Width="75" Height="75" PointerEntered="Panel_PointerEntered" PointerExited="Panel_PointerExited">
+				<Image x:Name="Rook" Width="75" Height="75" Cursor="Hand" PointerPressed="OnPieceSelected"/>
+			</Panel>
+			
+			<Panel Width="75" Height="75" PointerEntered="Panel_PointerEntered" PointerExited="Panel_PointerExited">
+				<Image x:Name="Queen" Width="75" Height="75" Cursor="Hand" PointerPressed="OnPieceSelected"/>
+			</Panel>
+		</StackPanel>
+	</StackPanel>
+</Window>

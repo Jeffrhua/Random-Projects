@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cecs475.BoardGames.Chess.Model</name>
+    </assembly>
+    <members>
+        <member name="T:Cecs475.BoardGames.Chess.Model.ChessBoard">
+            <summary>
+            Represents the board state of a game of chess. Tracks which squares of the 8x8 board are occupied
+            by which player's pieces.
+            </summary>
+        </member>
+        <member name="F:Cecs475.BoardGames.Chess.Model.ChessBoard.BoardSize">
+            <summary>
+            The dimensions of a chess board.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessBoard.IsFinished">
+            <summary>
+            True if the game is over: if a king is in checkmate, or in stalemate, or there is a draw.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessBoard.CurrentAdvantage">
+            <summary>
+            The current board advantage, as the number of "points" the leading player has over the 
+            opponent. Points are earned when capturing pieces: 1 for pawn, 3 for bishop or knight, 
+            5 for rook, and 9 for queen.
+            </summary>
+            <example>If white has captured a pawn and a rook, and black has captured a queen,
+            the advantage is 3 points for black (player 2).</example>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessBoard.MoveHistory">
+            <summary>
+            The history of moves applied to the board, where the most recent move is last in the list.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessBoard.IsCheck">
+            <summary>
+            True if the current player's king is in check: it is under threat, but there is at least one
+            possible move for the current player.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessBoard.IsCheckmate">
+            <summary>
+            True if the current player's king is in checkmate: it is under threat, and there are no 
+            possible moves for the current player.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessBoard.IsStalemate">
+            <summary>
+            True if the current player's king is in stalemate: it is not under threat, and there
+            are no possible moves for the current player.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessBoard.IsDraw">
+            <summary>
+            True if in the last 100 moves, no pieces have been captured and no pawns have moved.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessBoard.CurrentPlayer">
+            <summary>
+            The player whose turn it is.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessBoard.DrawCounter">
+            <summary>
+            Tracks the current draw counter, which goes up by 1 for each non-capturing, non-pawn move, and resets to 0
+            for other moves. If the counter reaches 100 (50 full turns), the game is a draw.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.GetPossibleMoves">
+            <summary>
+            Returns a sequence of all legal moves for the current player.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.ApplyMove(Cecs475.BoardGames.Chess.Model.ChessMove)">
+            <summary>
+            Applies the given move to the board, updating the game state accordingly.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.UndoLastMove">
+            <summary>
+            Undoes the last move applied to the board, restoring its state prior to the move.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.GetPieceAtPosition(Cecs475.BoardGames.Model.BoardPosition)">
+            <summary>
+            Returns whatever chess piece is occupying the given position.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.GetPlayerAtPosition(Cecs475.BoardGames.Model.BoardPosition)">
+            <summary>
+            Returns the player that has a piece at the given position, or a 0 if it is empty.
+            </summary>
+            <param name="pos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.PositionIsEmpty(Cecs475.BoardGames.Model.BoardPosition)">
+            <summary>
+            Returns true if the given position on the board is empty.
+            </summary>
+            <remarks>returns false if the position is not in bounds</remarks>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.PositionIsEnemy(Cecs475.BoardGames.Model.BoardPosition,System.Int32)">
+            <summary>
+            Returns true if the given position contains a piece that is the enemy of the given player.
+            </summary>
+            <remarks>returns false if the position is not in bounds</remarks>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.PositionInBounds(Cecs475.BoardGames.Model.BoardPosition)">
+            <summary>
+            Returns true if the given position is in the bounds of the board.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.GetPositionsOfPiece(Cecs475.BoardGames.Chess.Model.ChessPieceType,System.Int32)">
+            <summary>
+            Returns all board positions where the given piece can be found.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.GetAttackedPositions(System.Int32)">
+            <summary>
+            Returns a set of all positions threated by pieces controlled by the given player.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessBoard.SetPieceAtPosition(Cecs475.BoardGames.Model.BoardPosition,Cecs475.BoardGames.Chess.Model.ChessPiece)">
+            <summary>
+            Mutates the board state so that the given piece is at the given position.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessBoard.BoardWeight">
+            <summary>
+            Not used in this assignment.
+            </summary>
+        </member>
+        <member name="T:Cecs475.BoardGames.Chess.Model.ChessMove">
+            <summary>
+            Represents a single move to be applied to a chess board.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessMove.StartPosition">
+            <summary>
+            The starting position of the move.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessMove.EndPosition">
+            <summary>
+            The ending position of the move.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessMove.MoveType">
+            <summary>
+            The type of move being applied.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessMove.Player">
+            <inheritdoc />
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessMove.#ctor(Cecs475.BoardGames.Model.BoardPosition,Cecs475.BoardGames.Model.BoardPosition,Cecs475.BoardGames.Chess.Model.ChessMoveType)">
+            <summary>
+            Constructs a ChessMove that moves a piece from one position to another
+            </summary>
+            <param name="start">the starting position of the piece to move</param>
+            <param name="end">the position where the piece will end up</param>
+            <param name="moveType">the type of move represented</param>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessMove.Equals(Cecs475.BoardGames.Chess.Model.ChessMove)">
+            <summary>
+            True if both moves start and end at the same positions.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessMove.Equals(System.Object)">
+            <summary>
+            True if both moves start and end at the same positions.
+            </summary>
+        </member>
+        <member name="T:Cecs475.BoardGames.Chess.Model.PawnPromotionChessMove">
+            <summary>
+            Represents a ChessMove that is promoting a pawn to a chosen piece type.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.PawnPromotionChessMove.SelectedPromotion">
+            <summary>
+            The ChessPieceType that the pawn will be promoted to.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.PawnPromotionChessMove.#ctor(Cecs475.BoardGames.Model.BoardPosition,Cecs475.BoardGames.Model.BoardPosition,Cecs475.BoardGames.Chess.Model.ChessPieceType)">
+            <summary>
+            Constructs a ChessMove that moves a pawn to the final rank and promotes it to a chosen piece type.
+            </summary>
+        </member>
+        <member name="T:Cecs475.BoardGames.Chess.Model.ChessMoveType">
+            <summary>
+            Identifies the type of move represented by a ChessMove object, in particular highlighting 
+            "special" moves.
+            </summary>
+        </member>
+        <member name="F:Cecs475.BoardGames.Chess.Model.ChessMoveType.Normal">
+            <summary>
+            Moving one piece using its normal move rules
+            </summary>
+        </member>
+        <member name="F:Cecs475.BoardGames.Chess.Model.ChessMoveType.CastleQueenSide">
+            <summary>
+            Castling to the queen side
+            </summary>
+        </member>
+        <member name="F:Cecs475.BoardGames.Chess.Model.ChessMoveType.CastleKingSide">
+            <summary>
+            Castling to the king side
+            </summary>
+        </member>
+        <member name="F:Cecs475.BoardGames.Chess.Model.ChessMoveType.EnPassant">
+            <summary>
+            Performing an en passant
+            </summary>
+        </member>
+        <member name="F:Cecs475.BoardGames.Chess.Model.ChessMoveType.PawnPromote">
+            <summary>
+            Promoting a pawn that is reaching the final rank
+            </summary>
+        </member>
+        <member name="T:Cecs475.BoardGames.Chess.Model.ChessPiece">
+            <summary>
+            Represents a chess piece owned by a particular player.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessPiece.PieceType">
+            <summary>
+            The type of the piece.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessPiece.Player">
+            <summary>
+            The player that controls the piece.
+            </summary>
+        </member>
+        <member name="P:Cecs475.BoardGames.Chess.Model.ChessPiece.Empty">
+            <summary>
+            A ChessPiece that is equal to any empty position on a chess board.
+            </summary>
+        </member>
+        <member name="M:Cecs475.BoardGames.Chess.Model.ChessPieceStrategy.FilterInvalidMoves(System.Collections.Generic.IEnumerable{Cecs475.BoardGames.Chess.Model.ChessMove},Cecs475.BoardGames.Chess.Model.ChessBoard)">
+            <summary>
+            Yields only moves that, when applied, do not leave the king in check.
+            </summary>
+        </member>
+        <member name="T:Cecs475.BoardGames.Chess.Model.ChessPieceType">
+            <summary>
+            Represents the type of chess piece occupying a square on a chess board.
+            </summary>
+        </member>
+        <member name="F:Cecs475.BoardGames.Chess.Model.ChessPieceType.Empty">
+            <summary>
+            An empty square.
+            </summary>
+        </member>
+    </members>
+</doc>

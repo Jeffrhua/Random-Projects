@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:local="clr-namespace:Cecs475.BoardGames.TicTacToe.AvaloniaView"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Cecs475.BoardGames.TicTacToe.AvaloniaView.TicTacToeView">
+	<UserControl.Resources>
+		<local:TicTacToeViewModel x:Key="vm"/>
+		<local:TicTacToeSquarePlayerConverter x:Key="PlayerSymbol"/>
+	</UserControl.Resources>
+	<ItemsControl x:Name="BoardPositions" DataContext="{StaticResource vm}"
+                  ItemsSource="{Binding Squares}">
+		<ItemsControl.ItemsPanel>
+			<ItemsPanelTemplate>
+				<UniformGrid Columns="3" Rows="3" Background="Green"/>
+			</ItemsPanelTemplate>
+		</ItemsControl.ItemsPanel>
+		<ItemsControl.ItemTemplate>
+			<DataTemplate>
+				<Border BorderThickness="1" BorderBrush="Black">
+					<Panel  Background="Green" PointerEntered="Panel_PointerEntered" PointerExited="Panel_PointerExited" PointerReleased="Panel_PointerReleased">
+						<ContentControl Content="{Binding Player, Converter={StaticResource PlayerSymbol}}"/>
+					</Panel>
+				</Border>
+			</DataTemplate>
+		</ItemsControl.ItemTemplate>
+	</ItemsControl>
+</UserControl>

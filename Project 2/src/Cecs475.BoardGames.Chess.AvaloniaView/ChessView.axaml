@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:local="clr-namespace:Cecs475.BoardGames.Chess.AvaloniaView"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Cecs475.BoardGames.Chess.AvaloniaView.ChessView" >
+	<UserControl.Resources>
+		<local:ChessViewModel x:Key="vm"/>
+		<!-- Converter for the background tiles -->
+		<local:ChessSquareBackgroundConverter x:Key="BackgroundColor"/>
+		<!-- Converter for the chess pieces -->
+		<local:ChessSquarePieceConverter x:Key="PieceConverter"/>
+	</UserControl.Resources>
+
+	<!-- Binds each tile to a "Chess Square" -->
+	<ItemsControl x:Name="BoardPositions" DataContext="{StaticResource vm}"
+				  x:DataType="local:ChessViewModel"
+                  ItemsSource="{Binding Squares}">
+
+		<!-- Generates a 8x8 grid -->
+		<ItemsControl.ItemsPanel>
+			<ItemsPanelTemplate>
+				<UniformGrid Columns="8" Rows="8" Background="Green"/>
+			</ItemsPanelTemplate>
+		</ItemsControl.ItemsPanel>
+
+		<ItemsControl.ItemTemplate>
+			<DataTemplate>
+				<Border BorderThickness="1" BorderBrush="Black">
+
+					<!-- Drawing the Basic Panel -->
+					<Panel PointerEntered="Panel_PointerEntered" PointerExited="Panel_PointerExited" PointerReleased="Panel_PointerReleased">
+						<Panel.Background>
+							<MultiBinding Converter="{StaticResource BackgroundColor}">
+								<Binding Path="Position"/>
+								<Binding Path="IsHighlighted"/>
+								<Binding Path="IsSelected"/>
+								<Binding Path="IsKingCheck"/>
+								<Binding Path="IsValidSelectPiece"/>
+							</MultiBinding>
+						</Panel.Background>
+
+						<!-- Display chess piece using the converter -->
+						<Image Source="{Binding Piece, Converter={StaticResource PieceConverter}}" />
+					</Panel>
+				</Border>
+			</DataTemplate>
+		</ItemsControl.ItemTemplate>
+
+	</ItemsControl>
+
+</UserControl>

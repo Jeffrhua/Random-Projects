@@ -1,0 +1,69 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:local="clr-namespace:Cecs475.BoardGames.Othello.AvaloniaView"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+             x:Class="Cecs475.BoardGames.Othello.AvaloniaView.OthelloView">
+	<UserControl.Resources>
+		<!-- 
+        The ViewModel contains the reference to the OthelloBoard object and makes its properties
+        easier for the View itself to consume
+        -->
+		<local:OthelloViewModel x:Key="vm"/>
+		<!-- This converter will convert from an int to a colored circle. -->
+		<local:OthelloSquarePlayerConverter x:Key="PlayerColor"/>
+		<local:OthelloSquareBackgroundConverter x:Key="BackgroundColor"/>
+	</UserControl.Resources>
+
+	<ItemsControl x:Name="BoardPositions" DataContext="{StaticResource vm}"
+                  ItemsSource="{Binding Squares}">
+		<!-- 
+        The ItemsPanel is the "container" for the controls that get spit out. 
+        A UniformGrid is a grid that auto-creates rows and columns that are evenly sized.
+        -->
+		<ItemsControl.ItemsPanel>
+			<ItemsPanelTemplate>
+				<UniformGrid Columns="8" Rows="8" Background="Green"/>
+			</ItemsPanelTemplate>
+		</ItemsControl.ItemsPanel>
+		<!-- 
+        The ItemTemplate defines what to generate for each entry in the ItemSource. Our ItemSource
+        is a collection of OthelloSquare objects, which we can bind to when generating the controls
+        for the item.
+        -->
+		<ItemsControl.ItemTemplate>
+			<DataTemplate>
+				<!-- 
+                This control is created for each element in the ItemSource. 
+                A Border control draws a border around whatever control it contains.
+                -->
+				<Border BorderThickness="1" BorderBrush="Black">
+					<!--
+					Mouse-related events only trigger on a Border object when the mouse physically touches the border, 
+					which is only 1 pixel thick. A Panel will fill the space insider the border, making a much
+					better target for mouse events.
+					-->
+					<Panel PointerEntered="Panel_PointerEntered" PointerExited="Panel_PointerExited" PointerReleased="Panel_PointerReleased">
+						<!--
+						The background color of the panel depends on both its position and whether it is highlighted.
+						-->
+						<Panel.Background>
+							<MultiBinding Converter="{StaticResource BackgroundColor}">
+								<Binding Path="Position"/>
+								<Binding Path="IsHighlighted"/>
+							</MultiBinding>
+						</Panel.Background>
+
+						<!-- 
+						A ContentControl is just a placeholder that gets replaced by its Content. 
+						We use it here because it can Bind to the Player property of an OthelloSquare object,
+						using our PlayerColor resource to convert that int to a control.
+						-->
+						<ContentControl Content="{Binding Player, Converter={StaticResource PlayerColor}}"></ContentControl>
+					</Panel>
+				</Border>
+			</DataTemplate>
+		</ItemsControl.ItemTemplate>
+	</ItemsControl>
+</UserControl>

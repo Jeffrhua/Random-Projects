@@ -1,0 +1,22 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Cecs475.BoardGames.AvaloniaApp.GameChoiceWindow"
+        Title="Let's play a game!" Width="300" FontSize="16"
+		xmlns:local="clr-namespace:Cecs475.BoardGames.AvaloniaView;assembly=Cecs475.BoardGames.AvaloniaView"
+
+        SizeToContent="Height" WindowStartupLocation="CenterScreen">
+	<StackPanel>
+		<Label>Choose a game to play:</Label>
+		 
+		<ItemsControl x:Name="GamesList" >
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Button Click="Button_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" x:CompileBindings="false" Content="{Binding GameName, Mode=OneTime}"/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</StackPanel>
+</Window>
